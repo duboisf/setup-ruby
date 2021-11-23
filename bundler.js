@@ -152,8 +152,9 @@ export async function bundleInstall(gemfile, lockFile, platform, engine, rubyVer
     console.log(`Found cache for key: ${cachedKey}`)
   }
 
+  const jobs = process.env['BUNDLE_JOBS'] || '4'
   // Always run 'bundle install' to list the gems
-  await exec.exec('bundle', ['install', '--jobs', '4'])
+  await exec.exec('bundle', ['install', '--jobs', jobs])
 
   // @actions/cache only allows to save for non-existing keys
   if (cachedKey !== key) {
